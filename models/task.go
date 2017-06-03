@@ -9,6 +9,7 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
@@ -53,15 +54,121 @@ type Task struct {
 	StartedAt strfmt.DateTime `json:"started_at,omitempty"`
 }
 
+// UnmarshalJSON unmarshals this object from a JSON structure
+func (m *Task) UnmarshalJSON(raw []byte) error {
+
+	var aO0 NewTask
+	if err := swag.ReadJSON(raw, &aO0); err != nil {
+		return err
+	}
+	m.NewTask = aO0
+
+	var data struct {
+		CompletedAt strfmt.DateTime `json:"completed_at,omitempty"`
+
+		CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
+
+		EnvVars map[string]string `json:"env_vars,omitempty"`
+
+		Error string `json:"error,omitempty"`
+
+		GroupName string `json:"group_name,omitempty"`
+
+		Reason string `json:"reason,omitempty"`
+
+		RetryAt string `json:"retry_at,omitempty"`
+
+		RetryOf string `json:"retry_of,omitempty"`
+
+		StartedAt strfmt.DateTime `json:"started_at,omitempty"`
+	}
+	if err := swag.ReadJSON(raw, &data); err != nil {
+		return err
+	}
+
+	m.CompletedAt = data.CompletedAt
+
+	m.CreatedAt = data.CreatedAt
+
+	m.EnvVars = data.EnvVars
+
+	m.Error = data.Error
+
+	m.GroupName = data.GroupName
+
+	m.Reason = data.Reason
+
+	m.RetryAt = data.RetryAt
+
+	m.RetryOf = data.RetryOf
+
+	m.StartedAt = data.StartedAt
+
+	return nil
+}
+
+// MarshalJSON marshals this object to a JSON structure
+func (m Task) MarshalJSON() ([]byte, error) {
+	var _parts [][]byte
+
+	aO0, err := swag.WriteJSON(m.NewTask)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, aO0)
+
+	var data struct {
+		CompletedAt strfmt.DateTime `json:"completed_at,omitempty"`
+
+		CreatedAt strfmt.DateTime `json:"created_at,omitempty"`
+
+		EnvVars map[string]string `json:"env_vars,omitempty"`
+
+		Error string `json:"error,omitempty"`
+
+		GroupName string `json:"group_name,omitempty"`
+
+		Reason string `json:"reason,omitempty"`
+
+		RetryAt string `json:"retry_at,omitempty"`
+
+		RetryOf string `json:"retry_of,omitempty"`
+
+		StartedAt strfmt.DateTime `json:"started_at,omitempty"`
+	}
+
+	data.CompletedAt = m.CompletedAt
+
+	data.CreatedAt = m.CreatedAt
+
+	data.EnvVars = m.EnvVars
+
+	data.Error = m.Error
+
+	data.GroupName = m.GroupName
+
+	data.Reason = m.Reason
+
+	data.RetryAt = m.RetryAt
+
+	data.RetryOf = m.RetryOf
+
+	data.StartedAt = m.StartedAt
+
+	jsonData, err := swag.WriteJSON(data)
+	if err != nil {
+		return nil, err
+	}
+	_parts = append(_parts, jsonData)
+
+	return swag.ConcatJSON(_parts...), nil
+}
+
 // Validate validates this task
 func (m *Task) Validate(formats strfmt.Registry) error {
 	var res []error
 
 	if err := m.NewTask.Validate(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateEnvVars(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -72,15 +179,6 @@ func (m *Task) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *Task) validateEnvVars(formats strfmt.Registry) error {
-
-	if err := validate.Required("env_vars", "body", m.EnvVars); err != nil {
-		return err
-	}
-
 	return nil
 }
 
@@ -106,10 +204,32 @@ func (m *Task) validateReasonEnum(path, location string, value string) error {
 
 func (m *Task) validateReason(formats strfmt.Registry) error {
 
+	if swag.IsZero(m.Reason) { // not required
+		return nil
+	}
+
 	// value enum
 	if err := m.validateReasonEnum("reason", "body", m.Reason); err != nil {
 		return err
 	}
 
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (m *Task) MarshalBinary() ([]byte, error) {
+	if m == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(m)
+}
+
+// UnmarshalBinary interface implementation
+func (m *Task) UnmarshalBinary(b []byte) error {
+	var res Task
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*m = res
 	return nil
 }

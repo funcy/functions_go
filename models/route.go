@@ -7,9 +7,9 @@ import (
 	"encoding/json"
 
 	strfmt "github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
@@ -26,10 +26,13 @@ type Route struct {
 	// Map of http headers that will be sent with the response
 	Headers map[string][]string `json:"headers,omitempty"`
 
+	// Hot functions idle timeout before termination. Value in Seconds
+	IDLETimeout *int64 `json:"idle_timeout,omitempty"`
+
 	// Name of Docker image to use in this route. You should include the image tag, which should be a version number, to be more accurate. Can be overridden on a per route basis with route.image.
 	Image string `json:"image,omitempty"`
 
-	// Maximum number of hot containers concurrency
+	// Maximum number of hot functions concurrency
 	MaxConcurrency int32 `json:"max_concurrency,omitempty"`
 
 	// Max usable memory for this route (MiB).
@@ -50,11 +53,6 @@ type Route struct {
 func (m *Route) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateConfig(formats); err != nil {
-		// prop
-		res = append(res, err)
-	}
-
 	if err := m.validateFormat(formats); err != nil {
 		// prop
 		res = append(res, err)
@@ -73,19 +71,6 @@ func (m *Route) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *Route) validateConfig(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Config) { // not required
-		return nil
-	}
-
-	if err := validate.Required("config", "body", m.Config); err != nil {
-		return err
-	}
-
 	return nil
 }
 
@@ -124,8 +109,8 @@ func (m *Route) validateHeaders(formats strfmt.Registry) error {
 		return nil
 	}
 
-	if err := validate.Required("headers", "body", m.Headers); err != nil {
-		return err
+	if swag.IsZero(m.Headers) { // not required
+		return nil
 	}
 
 	return nil
@@ -157,5 +142,23 @@ func (m *Route) validateType(formats strfmt.Registry) error {
 		return nil
 	}
 
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (m *Route) MarshalBinary() ([]byte, error) {
+	if m == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(m)
+}
+
+// UnmarshalBinary interface implementation
+func (m *Route) UnmarshalBinary(b []byte) error {
+	var res Route
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*m = res
 	return nil
 }
