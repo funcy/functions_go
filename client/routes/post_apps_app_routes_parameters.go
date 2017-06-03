@@ -4,6 +4,7 @@ package routes
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
 	"time"
 
 	"golang.org/x/net/context"
@@ -14,7 +15,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/iron-io/functions_go/models"
+	"github.com/denismakogon/functions_go/models"
 )
 
 // NewPostAppsAppRoutesParams creates a new PostAppsAppRoutesParams object
@@ -47,6 +48,15 @@ func NewPostAppsAppRoutesParamsWithContext(ctx context.Context) *PostAppsAppRout
 	}
 }
 
+// NewPostAppsAppRoutesParamsWithHTTPClient creates a new PostAppsAppRoutesParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewPostAppsAppRoutesParamsWithHTTPClient(client *http.Client) *PostAppsAppRoutesParams {
+	var ()
+	return &PostAppsAppRoutesParams{
+		HTTPClient: client,
+	}
+}
+
 /*PostAppsAppRoutesParams contains all the parameters to send to the API endpoint
 for the post apps app routes operation typically these are written to a http.Request
 */
@@ -63,8 +73,9 @@ type PostAppsAppRoutesParams struct {
 	*/
 	Body *models.RouteWrapper
 
-	timeout time.Duration
-	Context context.Context
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
 }
 
 // WithTimeout adds the timeout to the post apps app routes params
@@ -87,6 +98,17 @@ func (o *PostAppsAppRoutesParams) WithContext(ctx context.Context) *PostAppsAppR
 // SetContext adds the context to the post apps app routes params
 func (o *PostAppsAppRoutesParams) SetContext(ctx context.Context) {
 	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the post apps app routes params
+func (o *PostAppsAppRoutesParams) WithHTTPClient(client *http.Client) *PostAppsAppRoutesParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the post apps app routes params
+func (o *PostAppsAppRoutesParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithApp adds the app to the post apps app routes params
@@ -114,7 +136,9 @@ func (o *PostAppsAppRoutesParams) SetBody(body *models.RouteWrapper) {
 // WriteToRequest writes these params to a swagger request
 func (o *PostAppsAppRoutesParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
-	r.SetTimeout(o.timeout)
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	// path param app

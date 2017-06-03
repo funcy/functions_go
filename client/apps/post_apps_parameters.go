@@ -4,6 +4,7 @@ package apps
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
 	"time"
 
 	"golang.org/x/net/context"
@@ -14,7 +15,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/iron-io/functions_go/models"
+	"github.com/denismakogon/functions_go/models"
 )
 
 // NewPostAppsParams creates a new PostAppsParams object
@@ -47,6 +48,15 @@ func NewPostAppsParamsWithContext(ctx context.Context) *PostAppsParams {
 	}
 }
 
+// NewPostAppsParamsWithHTTPClient creates a new PostAppsParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewPostAppsParamsWithHTTPClient(client *http.Client) *PostAppsParams {
+	var ()
+	return &PostAppsParams{
+		HTTPClient: client,
+	}
+}
+
 /*PostAppsParams contains all the parameters to send to the API endpoint
 for the post apps operation typically these are written to a http.Request
 */
@@ -58,8 +68,9 @@ type PostAppsParams struct {
 	*/
 	Body *models.AppWrapper
 
-	timeout time.Duration
-	Context context.Context
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
 }
 
 // WithTimeout adds the timeout to the post apps params
@@ -84,6 +95,17 @@ func (o *PostAppsParams) SetContext(ctx context.Context) {
 	o.Context = ctx
 }
 
+// WithHTTPClient adds the HTTPClient to the post apps params
+func (o *PostAppsParams) WithHTTPClient(client *http.Client) *PostAppsParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the post apps params
+func (o *PostAppsParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
+}
+
 // WithBody adds the body to the post apps params
 func (o *PostAppsParams) WithBody(body *models.AppWrapper) *PostAppsParams {
 	o.SetBody(body)
@@ -98,7 +120,9 @@ func (o *PostAppsParams) SetBody(body *models.AppWrapper) {
 // WriteToRequest writes these params to a swagger request
 func (o *PostAppsParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
-	r.SetTimeout(o.timeout)
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	if o.Body == nil {

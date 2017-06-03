@@ -11,7 +11,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/iron-io/functions_go/models"
+	"github.com/denismakogon/functions_go/models"
 )
 
 // PatchAppsAppReader is a Reader for the PatchAppsApp structure.
@@ -48,6 +48,9 @@ func (o *PatchAppsAppReader) ReadResponse(response runtime.ClientResponse, consu
 		result := NewPatchAppsAppDefault(response.Code())
 		if err := result.readResponse(response, consumer, o.formats); err != nil {
 			return nil, err
+		}
+		if response.Code()/100 == 2 {
+			return result, nil
 		}
 		return nil, result
 	}

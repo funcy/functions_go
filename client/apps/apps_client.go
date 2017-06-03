@@ -43,6 +43,7 @@ func (a *Client) DeleteAppsApp(params *DeleteAppsAppParams) (*DeleteAppsAppOK, e
 		Params:             params,
 		Reader:             &DeleteAppsAppReader{formats: a.formats},
 		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
@@ -72,6 +73,7 @@ func (a *Client) GetApps(params *GetAppsParams) (*GetAppsOK, error) {
 		Params:             params,
 		Reader:             &GetAppsReader{formats: a.formats},
 		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
@@ -101,6 +103,7 @@ func (a *Client) GetAppsApp(params *GetAppsAppParams) (*GetAppsAppOK, error) {
 		Params:             params,
 		Reader:             &GetAppsAppReader{formats: a.formats},
 		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
@@ -130,6 +133,7 @@ func (a *Client) PatchAppsApp(params *PatchAppsAppParams) (*PatchAppsAppOK, erro
 		Params:             params,
 		Reader:             &PatchAppsAppReader{formats: a.formats},
 		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
@@ -159,6 +163,7 @@ func (a *Client) PostApps(params *PostAppsParams) (*PostAppsOK, error) {
 		Params:             params,
 		Reader:             &PostAppsReader{formats: a.formats},
 		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err

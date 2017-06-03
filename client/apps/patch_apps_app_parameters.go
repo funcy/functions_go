@@ -4,6 +4,7 @@ package apps
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
 	"time"
 
 	"golang.org/x/net/context"
@@ -14,7 +15,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/iron-io/functions_go/models"
+	"github.com/denismakogon/functions_go/models"
 )
 
 // NewPatchAppsAppParams creates a new PatchAppsAppParams object
@@ -47,6 +48,15 @@ func NewPatchAppsAppParamsWithContext(ctx context.Context) *PatchAppsAppParams {
 	}
 }
 
+// NewPatchAppsAppParamsWithHTTPClient creates a new PatchAppsAppParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewPatchAppsAppParamsWithHTTPClient(client *http.Client) *PatchAppsAppParams {
+	var ()
+	return &PatchAppsAppParams{
+		HTTPClient: client,
+	}
+}
+
 /*PatchAppsAppParams contains all the parameters to send to the API endpoint
 for the patch apps app operation typically these are written to a http.Request
 */
@@ -63,8 +73,9 @@ type PatchAppsAppParams struct {
 	*/
 	Body *models.AppWrapper
 
-	timeout time.Duration
-	Context context.Context
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
 }
 
 // WithTimeout adds the timeout to the patch apps app params
@@ -87,6 +98,17 @@ func (o *PatchAppsAppParams) WithContext(ctx context.Context) *PatchAppsAppParam
 // SetContext adds the context to the patch apps app params
 func (o *PatchAppsAppParams) SetContext(ctx context.Context) {
 	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the patch apps app params
+func (o *PatchAppsAppParams) WithHTTPClient(client *http.Client) *PatchAppsAppParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the patch apps app params
+func (o *PatchAppsAppParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithApp adds the app to the patch apps app params
@@ -114,7 +136,9 @@ func (o *PatchAppsAppParams) SetBody(body *models.AppWrapper) {
 // WriteToRequest writes these params to a swagger request
 func (o *PatchAppsAppParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
-	r.SetTimeout(o.timeout)
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	// path param app
