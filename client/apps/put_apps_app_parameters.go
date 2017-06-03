@@ -14,7 +14,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/iron-io/functions_go/models"
+	"gitlab-odx.oracle.com/odx/functions_go/models"
 )
 
 // NewPutAppsAppParams creates a new PutAppsAppParams object

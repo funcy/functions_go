@@ -11,7 +11,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/iron-io/functions_go/models"
+	"gitlab-odx.oracle.com/odx/functions_go/models"
 )
 
 // PutAppsAppReader is a Reader for the PutAppsApp structure.
