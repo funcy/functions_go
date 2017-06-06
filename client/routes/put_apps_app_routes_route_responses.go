@@ -11,7 +11,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"gitlab-odx.oracle.com/odx/functions_go/models"
+	"github.com/funcy/functions_go/models"
 )
 
 // PutAppsAppRoutesRouteReader is a Reader for the PutAppsAppRoutesRoute structure.
