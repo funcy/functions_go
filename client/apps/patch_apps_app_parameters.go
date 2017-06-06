@@ -15,7 +15,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/denismakogon/functions_go/models"
+	"github.com/funcy/functions_go/models"
 )
 
 // NewPatchAppsAppParams creates a new PatchAppsAppParams object

@@ -9,10 +9,10 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/denismakogon/functions_go/client/apps"
-	"github.com/denismakogon/functions_go/client/routes"
-	"github.com/denismakogon/functions_go/client/tasks"
-	"github.com/denismakogon/functions_go/client/version"
+	"github.com/funcy/functions_go/client/apps"
+	"github.com/funcy/functions_go/client/routes"
+	"github.com/funcy/functions_go/client/tasks"
+	"github.com/funcy/functions_go/client/version"
 )
 
 // Default functions HTTP client.
