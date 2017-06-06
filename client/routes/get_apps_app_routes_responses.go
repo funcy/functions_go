@@ -11,7 +11,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/iron-io/functions_go/models"
+	"github.com/funcy/functions_go/models"
 )
 
 // GetAppsAppRoutesReader is a Reader for the GetAppsAppRoutes structure.

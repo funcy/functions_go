@@ -1,4 +1,4 @@
-package: github.com/iron-io/functions_go
+package: github.com/funcy/functions_go
 import:
 - package: github.com/go-openapi/errors
 - package: github.com/go-openapi/runtime

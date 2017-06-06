@@ -14,7 +14,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/iron-io/functions_go/models"
+	"github.com/funcy/functions_go/models"
 )
 
 // NewPatchAppsAppRoutesRouteParams creates a new PatchAppsAppRoutesRouteParams object
