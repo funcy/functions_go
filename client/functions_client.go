@@ -10,6 +10,7 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 
 	"github.com/funcy/functions_go/client/apps"
+	"github.com/funcy/functions_go/client/call"
 	"github.com/funcy/functions_go/client/routes"
 	"github.com/funcy/functions_go/client/tasks"
 	"github.com/funcy/functions_go/client/version"
@@ -57,6 +58,8 @@ func New(transport runtime.ClientTransport, formats strfmt.Registry) *Functions 
 	cli.Transport = transport
 
 	cli.Apps = apps.New(transport, formats)
+
+	cli.Call = call.New(transport, formats)
 
 	cli.Routes = routes.New(transport, formats)
 
@@ -110,6 +113,8 @@ func (cfg *TransportConfig) WithSchemes(schemes []string) *TransportConfig {
 type Functions struct {
 	Apps *apps.Client
 
+	Call *call.Client
+
 	Routes *routes.Client
 
 	Tasks *tasks.Client
@@ -124,6 +129,8 @@ func (c *Functions) SetTransport(transport runtime.ClientTransport) {
 	c.Transport = transport
 
 	c.Apps.SetTransport(transport)
+
+	c.Call.SetTransport(transport)
 
 	c.Routes.SetTransport(transport)
 
