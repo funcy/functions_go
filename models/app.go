@@ -5,10 +5,9 @@ package models
 
 import (
 	strfmt "github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 
 	"github.com/go-openapi/errors"
-	"github.com/go-openapi/validate"
+	"github.com/go-openapi/swag"
 )
 
 // App app
@@ -27,26 +26,26 @@ type App struct {
 func (m *App) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateConfig(formats); err != nil {
-		// prop
-		res = append(res, err)
-	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
 	return nil
 }
 
-func (m *App) validateConfig(formats strfmt.Registry) error {
-
-	if swag.IsZero(m.Config) { // not required
-		return nil
+// MarshalBinary interface implementation
+func (m *App) MarshalBinary() ([]byte, error) {
+	if m == nil {
+		return nil, nil
 	}
+	return swag.WriteJSON(m)
+}
 
-	if err := validate.Required("config", "body", m.Config); err != nil {
+// UnmarshalBinary interface implementation
+func (m *App) UnmarshalBinary(b []byte) error {
+	var res App
+	if err := swag.ReadJSON(b, &res); err != nil {
 		return err
 	}
-
+	*m = res
 	return nil
 }

@@ -4,10 +4,12 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"strconv"
+
 	strfmt "github.com/go-openapi/strfmt"
-	"github.com/go-openapi/swag"
 
 	"github.com/go-openapi/errors"
+	"github.com/go-openapi/swag"
 	"github.com/go-openapi/validate"
 )
 
@@ -58,6 +60,9 @@ func (m *AppsWrapper) validateApps(formats strfmt.Registry) error {
 		if m.Apps[i] != nil {
 
 			if err := m.Apps[i].Validate(formats); err != nil {
+				if ve, ok := err.(*errors.Validation); ok {
+					return ve.ValidateName("apps" + "." + strconv.Itoa(i))
+				}
 				return err
 			}
 		}
@@ -76,9 +81,30 @@ func (m *AppsWrapper) validateError(formats strfmt.Registry) error {
 	if m.Error != nil {
 
 		if err := m.Error.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("error")
+			}
 			return err
 		}
 	}
 
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (m *AppsWrapper) MarshalBinary() ([]byte, error) {
+	if m == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(m)
+}
+
+// UnmarshalBinary interface implementation
+func (m *AppsWrapper) UnmarshalBinary(b []byte) error {
+	var res AppsWrapper
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*m = res
 	return nil
 }

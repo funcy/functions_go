@@ -43,6 +43,7 @@ func (a *Client) DeleteAppsAppRoutesRoute(params *DeleteAppsAppRoutesRouteParams
 		Params:             params,
 		Reader:             &DeleteAppsAppRoutesRouteReader{formats: a.formats},
 		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
@@ -72,6 +73,7 @@ func (a *Client) GetAppsAppRoutes(params *GetAppsAppRoutesParams) (*GetAppsAppRo
 		Params:             params,
 		Reader:             &GetAppsAppRoutesReader{formats: a.formats},
 		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
@@ -101,6 +103,7 @@ func (a *Client) GetAppsAppRoutesRoute(params *GetAppsAppRoutesRouteParams) (*Ge
 		Params:             params,
 		Reader:             &GetAppsAppRoutesRouteReader{formats: a.formats},
 		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
@@ -130,6 +133,7 @@ func (a *Client) PatchAppsAppRoutesRoute(params *PatchAppsAppRoutesRouteParams) 
 		Params:             params,
 		Reader:             &PatchAppsAppRoutesRouteReader{formats: a.formats},
 		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
@@ -159,6 +163,7 @@ func (a *Client) PostAppsAppRoutes(params *PostAppsAppRoutesParams) (*PostAppsAp
 		Params:             params,
 		Reader:             &PostAppsAppRoutesReader{formats: a.formats},
 		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err

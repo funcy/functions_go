@@ -4,6 +4,7 @@ package routes
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
+	"net/http"
 	"time"
 
 	"golang.org/x/net/context"
@@ -47,6 +48,15 @@ func NewPatchAppsAppRoutesRouteParamsWithContext(ctx context.Context) *PatchApps
 	}
 }
 
+// NewPatchAppsAppRoutesRouteParamsWithHTTPClient creates a new PatchAppsAppRoutesRouteParams object
+// with the default values initialized, and the ability to set a custom HTTPClient for a request
+func NewPatchAppsAppRoutesRouteParamsWithHTTPClient(client *http.Client) *PatchAppsAppRoutesRouteParams {
+	var ()
+	return &PatchAppsAppRoutesRouteParams{
+		HTTPClient: client,
+	}
+}
+
 /*PatchAppsAppRoutesRouteParams contains all the parameters to send to the API endpoint
 for the patch apps app routes route operation typically these are written to a http.Request
 */
@@ -68,8 +78,9 @@ type PatchAppsAppRoutesRouteParams struct {
 	*/
 	Route string
 
-	timeout time.Duration
-	Context context.Context
+	timeout    time.Duration
+	Context    context.Context
+	HTTPClient *http.Client
 }
 
 // WithTimeout adds the timeout to the patch apps app routes route params
@@ -92,6 +103,17 @@ func (o *PatchAppsAppRoutesRouteParams) WithContext(ctx context.Context) *PatchA
 // SetContext adds the context to the patch apps app routes route params
 func (o *PatchAppsAppRoutesRouteParams) SetContext(ctx context.Context) {
 	o.Context = ctx
+}
+
+// WithHTTPClient adds the HTTPClient to the patch apps app routes route params
+func (o *PatchAppsAppRoutesRouteParams) WithHTTPClient(client *http.Client) *PatchAppsAppRoutesRouteParams {
+	o.SetHTTPClient(client)
+	return o
+}
+
+// SetHTTPClient adds the HTTPClient to the patch apps app routes route params
+func (o *PatchAppsAppRoutesRouteParams) SetHTTPClient(client *http.Client) {
+	o.HTTPClient = client
 }
 
 // WithApp adds the app to the patch apps app routes route params
@@ -130,7 +152,9 @@ func (o *PatchAppsAppRoutesRouteParams) SetRoute(route string) {
 // WriteToRequest writes these params to a swagger request
 func (o *PatchAppsAppRoutesRouteParams) WriteToRequest(r runtime.ClientRequest, reg strfmt.Registry) error {
 
-	r.SetTimeout(o.timeout)
+	if err := r.SetTimeout(o.timeout); err != nil {
+		return err
+	}
 	var res []error
 
 	// path param app

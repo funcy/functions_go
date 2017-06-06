@@ -43,6 +43,7 @@ func (a *Client) GetTasks(params *GetTasksParams) (*GetTasksOK, error) {
 		Params:             params,
 		Reader:             &GetTasksReader{formats: a.formats},
 		Context:            params.Context,
+		Client:             params.HTTPClient,
 	})
 	if err != nil {
 		return nil, err
