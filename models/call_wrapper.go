@@ -15,10 +15,9 @@ import (
 // swagger:model CallWrapper
 type CallWrapper struct {
 
-	// Call ID.
+	// Call object.
 	// Required: true
-	// Read Only: true
-	Call string `json:"call"`
+	Call *Call `json:"call"`
 }
 
 // Validate validates this call wrapper
@@ -38,8 +37,18 @@ func (m *CallWrapper) Validate(formats strfmt.Registry) error {
 
 func (m *CallWrapper) validateCall(formats strfmt.Registry) error {
 
-	if err := validate.RequiredString("call", "body", string(m.Call)); err != nil {
+	if err := validate.Required("call", "body", m.Call); err != nil {
 		return err
+	}
+
+	if m.Call != nil {
+
+		if err := m.Call.Validate(formats); err != nil {
+			if ve, ok := err.(*errors.Validation); ok {
+				return ve.ValidateName("call")
+			}
+			return err
+		}
 	}
 
 	return nil
