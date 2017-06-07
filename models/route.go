@@ -27,7 +27,7 @@ type Route struct {
 	Headers map[string][]string `json:"headers,omitempty"`
 
 	// Hot functions idle timeout before termination. Value in Seconds
-	IDLETimeout int64 `json:"idle_timeout,omitempty"`
+	IDLETimeout *int32 `json:"idle_timeout,omitempty"`
 
 	// Name of Docker image to use in this route. You should include the image tag, which should be a version number, to be more accurate. Can be overridden on a per route basis with route.image.
 	Image string `json:"image,omitempty"`
@@ -43,7 +43,7 @@ type Route struct {
 	Path string `json:"path,omitempty"`
 
 	// Timeout for executions of this route. Value in Seconds
-	Timeout int64 `json:"timeout,omitempty"`
+	Timeout *int32 `json:"timeout,omitempty"`
 
 	// Route type
 	Type interface{} `json:"type,omitempty"`
