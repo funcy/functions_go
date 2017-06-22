@@ -32,9 +32,6 @@ type Route struct {
 	// Name of Docker image to use in this route. You should include the image tag, which should be a version number, to be more accurate. Can be overridden on a per route basis with route.image.
 	Image string `json:"image,omitempty"`
 
-	// Maximum number of hot functions concurrency
-	MaxConcurrency int32 `json:"max_concurrency,omitempty"`
-
 	// Max usable memory for this route (MiB).
 	Memory int64 `json:"memory,omitempty"`
 
